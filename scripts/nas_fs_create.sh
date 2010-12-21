@@ -1,0 +1,6 @@
+ssh root@nas1a "xcli.py fs_create fs=fs1 pool=pool1 size=800"
+ssh root@nas1a "xcli.py fs_list"
+ssh root@nas1a "xcli.py share_create enable_nfs=yes fs=fs1 share=share1"
+ssh root@nas1a "xcli.py share_list"
+ssh root@nas1a "xcli.py share_create enable_nfs=yes fs=fs1 share=share2"
+ssh root@nas1a "xcli.py share_list"
