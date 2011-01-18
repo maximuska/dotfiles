@@ -1,5 +1,5 @@
 #!/bin/bash
 
-export cmd="ssh root@nas1a 'bash -c \"for m in 1 7 10 13 4; do ssh module-\\\$m kill -6 1; done\"'"
+export cmd="ssh root@nas1a 'bash -c \"for m in 1 7 11 4; do ssh module-\\\$m kill -6 1; done\"'"
 echo $cmd
 eval $cmd
