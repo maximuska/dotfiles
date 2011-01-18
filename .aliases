@@ -7,3 +7,4 @@ alias gl='global -x'
 alias nas1a="ssh root@nas1a"
 alias hd='hexdump'
 alias p11='cd /local/home/maximk/p11.0/'
+alias gg='git grep -n'
