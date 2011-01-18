@@ -221,15 +221,16 @@
 ;; Customizing programming modes using hooks...
 (defun my-cmode-hook()
   "Set of identation-related fixes applied to all programming modes"
-  (c-set-style "gnu")
+  (c-set-style "bsd")
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
   (gtags-mode t)
+  ; show FIXME/TODO/BUG keywords
+  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 font-lock-warning-face t)))
   (whitespace-mode t))
 
-(add-hook 'c-mode-hook 'my-cmode-hook)
-(add-hook 'c++-mode-hook 'my-cmode-hook)
+(add-hook 'c-common-mode-hook 'my-cmode-hook)
 ;(add-hook 'perl-mode-hook 'my-cmode-hook)
 
 ;; Python mode hook
