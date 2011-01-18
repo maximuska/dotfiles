@@ -22,6 +22,7 @@
     whitespace = red reverse
 [core]
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	editor = vim
 
 [alias]
     st = status
@@ -30,12 +31,15 @@
     co = checkout
     df = diff
     lp = log -p
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --decorate=short --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+    # Shows all commits that are in any of local branches but not in any of remote-tracking branches
+    local = log --branches --not --remotes
+
     ls = ls-files
-    what = whatchanged -p
-    lw = whatchanged
+    what = whatchanged
 [branch]
 	autosetupmerge = true
 	autosetuprebase = always
@@ -43,5 +47,5 @@
 	default = tracking
 [rebase]
 	stat = True
-[branch "nas_compatible_11.0.0"]
+[branch "NAS"]
 	rebase = true
