@@ -225,12 +225,13 @@
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
+  (setq fill-column 100)
   (gtags-mode t)
   ; show FIXME/TODO/BUG keywords
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 font-lock-warning-face t)))
   (whitespace-mode t))
 
-(add-hook 'c-common-mode-hook 'my-cmode-hook)
+(add-hook 'c-mode-common-hook 'my-cmode-hook)
 ;(add-hook 'perl-mode-hook 'my-cmode-hook)
 
 ;; Python mode hook
