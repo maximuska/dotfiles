@@ -14,6 +14,9 @@ set incsearch "do highlight as you type you
 
 nmap . .`[
 
+" Look down the parent folders for tag files
+set tags=tags,../tags,../../tags,../../../tags
+
 " Restore cursor to file position in previous editing session
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " 
