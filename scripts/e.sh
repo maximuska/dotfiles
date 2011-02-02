@@ -1,9 +1,29 @@
-#!/bin/bash 
+#!/bin/bash
 
-if ! emacsclient -e t >/dev/null 2>&1  
+# Starting emacs server unless already running & waiting it
+#  to finish the initializations
+if ! emacsclient -e t >/dev/null 2>&1
 then
-    exec emacs "$@" &
-else
+    emacs&
+    for ((i=1; i <= 10; ++i)); do
+        echo -ne "Waiting for emacs server to start.. $i\r"
+        sleep 1
+        if emacsclient -e t >/dev/null 2>&1
+	then
+            break
+        else
+            if ((i == 10))
+            then
+                echo "Couldn't connect emacs server after $i sec, exiting.      "
+                exit -1
+            fi
+        fi
+    done
+    echo -ne "                                         \r"
+fi
+
+# Using emacsclient to open all the supplied files with optional
+# line numbers in emacs server
 for f in "$@"; do
     if [[ $f =~ "(.*):([0-9]+):?" ]]
     then
@@ -11,6 +31,6 @@ for f in "$@"; do
     else
         emacsclient -n $f
     fi
+# TODO: add tags suport, like 'vi -t'
 # emacsclient -ne '(gtags-goto-tag "invoke_operation" "")'
 done
-fi
