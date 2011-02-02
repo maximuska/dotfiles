@@ -1,0 +1,3 @@
+#!/bin/bash
+
+git grep -n --color $*| sed -re "s/(:[0-9]+):/\1 /"
