@@ -7,6 +7,9 @@
       (cons "~/programs/share/emacs/site-lisp/"
             (cons "~/.emacs.d/site-lisp" load-path)))
 
+;; Loading general global key-mappings
+(load-file "~/.emacs.d/rc-keymapping.el")
+
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
@@ -256,21 +259,13 @@
 ;(global-set-key (kbd "<C-tab>") 'wcy-switch-buffer-forward)
 ;(global-set-key (kbd "<C-S-kp-tab>") 'wcy-switch-buffer-backward)
 
-(global-set-key [(M-down-mouse-3)] 'mouse-buffer-menu) ;;
-(global-set-key [(control backspace)] 'backward-kill-word) ;; 
-
 (if (fboundp 'pending-delete-mode)
     (pending-delete-mode 1))
 
-; Minimize on F1
-(global-set-key [f1] 'suspend-frame)
-
-; Change Tab size quickly
-(global-set-key [(control @)] (lambda () (interactive) (setq tab-width 2)))
-(global-set-key [(control $)] (lambda () (interactive) (setq tab-width 4)))
-
 ;(require 'tabbar)
 ;(tabbar-mode t)
+;; (global-set-key [(meta left)] 'tabbar-backward)
+;; (global-set-key [(meta right)] 'tabbar-forward)
 
 ;; (defun my-tabbar-buffer-groups ()
 ;;    "Return the list of group names the current buffer belongs to.
@@ -308,24 +303,6 @@
 ;; (set-face-attribute
 ;;  'tabbar-separator-face nil
 ;;  :height 0.7)
-
-;; (global-set-key [(meta left)] 'tabbar-backward)
-;; (global-set-key [(meta right)] 'tabbar-forward)
-
-; Find tag on F1
-(global-set-key [f1] 'find-tag)
-
-; Goto line on Alt-g
-(global-set-key [(meta g)] 'goto-line)
-
-; 
-(global-set-key [(control z)] 'undo)
-
-
-;; (defun my-switch-other-buffer()
-;;   (interactive)
-;;   (ido-switch-buffer))
-(global-set-key [(control tab)] "\C-xb")
 
 ;;
 ;;Color themes
