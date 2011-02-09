@@ -8,6 +8,8 @@ set wrapmargin=8
 syntax on
 set ruler
 
+set textwidth=140
+
 set backspace=indent,eol,start " make backspace a more flexible
 set incsearch "do highlight as you type you 
 "set laststatus=2 " always show the status line
