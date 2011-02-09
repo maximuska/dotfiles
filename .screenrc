@@ -1,0 +1,46 @@
+## Screen configuration file
+## Author: maximk
+
+# Set 'escape' key to ^W instead of Ctr-a
+escape ^Ww
+
+# Bind Alt-Left/Right to switch buffers in the current window
+bindkey -d "\033\033OD" prev
+bindkey -d "\033\033OC" next
+
+# Ditto with F1/F2
+bindkey -k k1 prev
+bindkey -k k2 next
+
+# Bind command mode to F11, and exit to F12
+bindkey -k F1 colon # F11
+bindkey -k F2 quit  # F12
+#bindkey -d "`" command # An additional escape key
+
+# Resizing active window
+#bind = resize =
+#bind + resize +1
+#bind - resize -1
+#bind _ resize max
+
+startup_message off
+vbell on
+
+#Scrolling in xterm
+#termcapinfo xterm* ti@:te@
+
+# geometry
+#height 240
+#width 120
+defscrollback 10000
+
+# status line
+hardstatus alwayslastline "%{= dd}--< %{= dm}%H%{= dd} >-- [%c] ( %-w%{= BW}%n %t%{-}%+w )%= >--"
+#hardstatus alwayslastline '%{= kG}[%{G}%H%{g}][%= %{= kw}%?%-Lw%?%{r} (%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+#caption always # activates window caption
+#caption string '%{= wk}[%{k}%H%{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
+
+screen -t build # Create windows with the specified titles (can be overriden by programs executed..)
+screen -t work1
+screen -t work2
+select 0 # Start with window #0 selected
