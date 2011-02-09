@@ -4,6 +4,6 @@ alias grep='grep --color'
 alias zap='rm *~'
 alias md='mkdir -p'
 alias gl='global -x'
-alias nas1a="ssh root@nas1a"
+alias nas1a="screen_win_title nas1a; ssh root@nas1a"
 alias hd='hexdump'
 alias p11='cd /local/home/maximk/p11.0/'
