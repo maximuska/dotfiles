@@ -18,6 +18,7 @@
     untracked = cyan
 [color]
     ui = true
+    diff = auto
 [color "diff"]
     whitespace = red reverse
 [core]
@@ -40,6 +41,7 @@
 
     ls = ls-files
     what = whatchanged
+    wdiff = diff --color-words
 [branch]
 	autosetupmerge = true
 	autosetuprebase = always
