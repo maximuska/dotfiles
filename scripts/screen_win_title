@@ -1,3 +1,0 @@
-#!/bin/bash
-
-[[ "$TERM" == "screen" ]] && echo -n -e '\ek'$*'\e\'

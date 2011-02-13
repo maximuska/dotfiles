@@ -43,4 +43,4 @@ export CDPATH=.:~:~/development
 export EDITOR=~/scripts/e.sh
 
 # Naming 'screen' windows by app executed / connected hosts 
-~/scripts/screen_win_title "bash"
+screen_win_title "bash"
