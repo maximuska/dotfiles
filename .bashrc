@@ -24,7 +24,7 @@ export PS1="\[\e]2;\W> \H: \w\a\e[34;1m\]\h: \W>\[\e[0m\] "
 
 export PYTHONPATH=~/lib:$PYTHONPATH
 export PATH=~/programs/bin:~/scripts:$PATH
-export MANPATH=~/programs/share/man:$MANPATH
+export MANPATH=~/programs/man:~/programs/share/man:$MANPATH
 
 export LDFLAGS=-L/a/home/maximk/programs/lib
 export CPPFLAGS=-I/a/home/maximk/programs/include
