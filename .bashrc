@@ -1,4 +1,5 @@
-# .bashrc
+## .bashrc
+## Author: Maxim Kalaev
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then

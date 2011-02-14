@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: Maxim Kalaev
 
 # Starting emacs server unless already running & waiting it
 #  to finish the initializations
