@@ -1,5 +1,0 @@
-#!/bin/bash
-
-ssh root@nas1a 'bash -c "for m in 1 7 11 4; do ssh module-\$m rm -f /local/syslog/messages\*; done"'
-ssh root@nas1a 'bash -c "for m in 1 7 11 4; do ssh module-\$m rm -f /local/scratch/gpfs.log; done"'
-ssh root@nas1a 'bash -c "for m in 1 7 11 4; do ssh module-\$m rm -f /local/scratch/exportfs.log; done"'

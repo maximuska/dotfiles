@@ -1,0 +1,32 @@
+#!/bin/bash --norc
+
+[[ "$target"x != "x" ]] || export target=nas1a
+[[ "$modules"x != "x" ]] || export modules="1 7 11 4" # Interface node should come last
+
+export from=$*
+
+if [[ "$from"x == "x" ]]; then
+    echo "Usage: show_nas1a_logs <pattern to cut logs from>"
+    echo "Example 1: show_nas1a_logs 10:30    <- will print logs since first line containing '10:30'"
+    echo "Example 2: show_nas1a_logs .        <- will print logs since first non-empty line, typically the first one"
+    exit 1
+fi
+
+echo -e "\e[1;33m=== Showing logs from line matching pattern: /$from/\e[m\n"
+
+echo -e '\e[1;33m-------- GPFS MMFS LOG ----------\e[m'
+ssh root@$target "bash -c 'for m in $modules; do echo -e \"\e[1;32mmodule-\$m:\e[m\"; ssh module-\$m sed -sn \"/$from/,\\\\\\\$p\" /var/adm/ras/mmfs.log.previous /var/adm/ras/mmfs.log.latest 2>&1; echo; done'"
+echo
+
+echo -e '\e[1;33m-------- GPFS SSH LOG ----------\e[m'
+ssh root@$target "bash -c 'for m in $modules; do echo -e \"\e[1;32mmodule-\$m:\e[m\"; ssh module-\$m sed -n \"/$from/,\\\\\\\$p\" /local/scratch/gpfs-ssh.log 2>&1; echo; done'"
+echo
+
+echo -e '\e[1;33m-------- GPFS commands LOG ----------\e[m'
+ssh root@$target "bash -c 'for m in $modules; do echo -e \"\e[1;32mmodule-\$m:\e[m\"; ssh module-\$m sed -n \"/$from/,\\\\\\\$p\" /local/scratch/gpfs.log 2>&1; echo; done'"
+echo
+
+echo -e '\e[1;33m-------- GPFS entries in syslog ----------\e[m'
+ssh root@$target "bash -c 'for m in $modules; do echo -e \"\e[1;32mmodule-\$m:\e[m\"; ssh module-\$m sed -ne \"/mmfs/!d\" -e \"/$from/,\\\\\\\$p\" /local/syslog/messages; echo; done'"
+
+echo

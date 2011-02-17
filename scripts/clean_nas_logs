@@ -1,0 +1,8 @@
+#!/bin/bash
+
+[[ "$target"x != "x" ]] || export target=nas1a
+[[ "$modules"x != "x" ]] || export modules="1 7 11 4" # Interface node should come last
+
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/syslog/messages\*; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/gpfs.log; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/exportfs.log; done'"
