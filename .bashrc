@@ -24,7 +24,7 @@ export PS1="\[\e]2;\W> \H: \w\a\e[34;1m\]\h: \W>\[\e[0m\] "
 #export PS1="\[\e]2;\W> \H: \w\a\e[34;1m\]\h: \W\e[33;1m\]$(__git_ps1 " (%s)")\e[34;1m\]>\[\e[0m\] "
 
 export PYTHONPATH=~/lib:$PYTHONPATH
-export PATH=~/programs/bin:~/scripts:$PATH
+export PATH=~/programs/bin:~/scripts:/usr/sbin/:$PATH
 export MANPATH=~/programs/man:~/programs/share/man:$MANPATH
 
 export LDFLAGS=-L/a/home/maximk/programs/lib
@@ -44,4 +44,7 @@ export CDPATH=.:~:~/development
 export EDITOR=~/scripts/e.sh
 
 # Naming 'screen' windows by app executed / connected hosts 
-screen_win_title "bash"
+screen_win_title "$HOST"
+
+# Seting dev. environment stuff
+[[ -f ~/.set_target ]] && source ~/.set_target

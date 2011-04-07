@@ -17,7 +17,7 @@ bindkey -k k2 next
 
 # Bind command mode to F11, and exit to F12
 bindkey -k F1 colon # F11
-bindkey -k F2 quit  # F12
+#bindkey -k F2 quit  # F12
 #bindkey -d "`" command # An additional escape key
 
 # Scroll up Alt+Up to initiate scrolling mode, and then [Alt] Pg+Up/Pg+Down to scroll through.
@@ -71,7 +71,6 @@ hardstatus lastline "%{= dd}--< %{= dm}%H%{= dd} >--< %{= dg}%c%{ dd} >-- ( %-w%
 #caption always # activates window caption
 #caption string '%{= wk}[%{k}%H%{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
 
-screen -t dummy 0 echo
 screen -t tab1 1 # Create windows with the specified titles (can be overriden by programs executed..)
 screen -t tab2 2
 screen -t tab3 3

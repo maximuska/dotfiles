@@ -24,4 +24,5 @@ for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
   echo;
 done
 echo
-
+echo -n Sample usage: "echo -e '\e[1;32mGREEN\e[0m': "
+echo -e '\e[1;32mGREEN\e[0m'

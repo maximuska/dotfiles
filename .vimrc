@@ -8,7 +8,7 @@ set wrapmargin=8
 syntax on
 set ruler
 
-set textwidth=140
+set textwidth=10000
 
 set backspace=indent,eol,start " make backspace a more flexible
 set incsearch "do highlight as you type you 

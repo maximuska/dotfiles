@@ -3,6 +3,10 @@
 [[ "$target"x != "x" ]] || export target=nas1a
 [[ "$modules"x != "x" ]] || export modules="1 7 11 4" # Interface node should come last
 
+echo Cleaning logs from $target
+
 ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/syslog/messages\*; done'"
-ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/gpfs.log; done'"
-ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/exportfs.log; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/gpfs.log\*; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/gpfs-ssh.log\*; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /local/scratch/exportfs.log\*; done'"
+ssh root@$target "bash -c 'for m in $modules; do ssh module-\$m rm -f /var/adm/ras/mmfs.log\*; done'"

@@ -3,6 +3,8 @@
 [[ "$target"x != "x" ]] || export target=nas1a
 [[ "$modules"x != "x" ]] || export modules="1 7 11 4" # Interface node should come last
 
+echo Rebooting $target...
+
 export cmd="ssh root@$target 'bash -c \"for m in $modules; do ssh module-\\\$m kill -6 1; done\"'"
 echo $cmd
 eval $cmd

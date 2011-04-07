@@ -1,8 +1,29 @@
 [user]
-	email = maximk@il.ibm.com
-	name = Maxim Kalaev
+    email = maximk@il.ibm.com
+    name = Maxim Kalaev
+[core]
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    editor = vim
+[branch]
+    autosetupmerge = true
+    autosetuprebase = always
+[push]
+    default = tracking
+[rebase]
+    stat = True
+
 [diff]
-	tool = meld
+    tool = p4merge
+[difftool "p4merge"]
+    cmd = "p4merge.exe $LOCAL $REMOTE"
+[merge]
+    tool = p4merge
+[mergetool "p4merge"]
+    cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+
 [color "branch"]
     current = yellow bold
     local = yellow
@@ -21,9 +42,6 @@
     diff = auto
 [color "diff"]
     whitespace = red reverse
-[core]
-    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	editor = vim
 
 [alias]
     st = status
@@ -32,7 +50,7 @@
     co = checkout
     df = diff
     lp = log -p
-    lg = log --graph --decorate=short --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
@@ -42,12 +60,3 @@
     ls = ls-files
     what = whatchanged
     wdiff = diff --color-words
-[branch]
-	autosetupmerge = true
-	autosetuprebase = always
-[push]
-	default = tracking
-[rebase]
-	stat = True
-[branch "NAS"]
-	rebase = true
