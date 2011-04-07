@@ -1,0 +1,43 @@
+#!/bin/bash 
+
+function ABORT() {
+    echo -e '\e[1;31m\nAborting: '$*'\e[0m'
+    exit -1
+}
+
+function INFO() {
+    echo -e '\e[1;32m'$*'\e[0m'
+}
+
+function unpack_rpm() {
+    # Auto-detect whatever the RPM is compressed
+    INFO "Unpacking $1.."
+
+    tmpfile="/tmp/.tmpfile.$$"
+    rpm2cpio $1 > $tmpfile || ABORT "rpm2cpio $1 has failed with $?"
+    if [[ `file $tmpfile` =~ "ASCII cpio archive" ]] ; then
+        # Not compressed
+        INFO "not compessed"
+        cpio -idmu <$tmpfile 
+    else
+        # Compressed RPM
+        (lzma d -so $tmpfile | cpio -idmu)
+#        (xz -dc $tmpfile | cpio -idmu)
+    fi
+    [ $? -eq 0 ] || ABORT "Installing $1 has failed"
+
+    rm -f $tmpfile
+    return 0
+}
+
+##########
+## MAIN ##
+
+echo Going to unpack the following packages: *.rpm to ./root/ folder
+[[ "$*"x == ""x ]] && sleep 2
+
+set -x
+
+mkdir -p root
+cd root
+for f in "$@" ; do unpack_rpm ../$f ; done
