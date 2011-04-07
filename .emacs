@@ -2,10 +2,12 @@
 
 ;; .emacs  
 
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/icicles")
 ;; Custom load load path
 (setq load-path
-      (cons "~/programs/share/emacs/site-lisp/"
-            (cons "~/.emacs.d/site-lisp" load-path)))
+      (cons "~/.emacs.d/site-lisp/icicles"
+            (cons "~/programs/share/emacs/site-lisp/"
+                  (cons "~/.emacs.d/site-lisp" load-path))))
 
 ;; Loading general global key-mappings
 (load-file "~/.emacs.d/rc-keymapping.el")
@@ -47,11 +49,8 @@
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(fringe-mode (quote (nil . 0)) nil (fringe))
-; '(global-semantic-tag-folding-mode t nil (semantic-util-modes))
  '(save-place t nil (saveplace))
  '(scroll-bar-mode (quote right))
-; '(semantic-idle-scheduler-idle-time 3)
-; '(semantic-self-insert-show-completion-function (lambda nil (semantic-ia-complete-symbol-menu (point))))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
@@ -63,7 +62,9 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "wheat" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :family "misc-dejavu sans mono"))))
- '(trailing-whitespace ((((class color) (background light)) (:background "wheat3")))))
+ '(trailing-whitespace ((((class color) (background light)) (:background "wheat3"))))
+ '(whitespace-line ((t (:background "burlywood"))))
+ '(whitespace-trailing ((t (:background "burlywood" :weight bold)))))
 
 ; Enable upcase/downcase-region commands
 (put 'upcase-region 'disabled nil)
@@ -198,10 +199,11 @@
 ;; This speeds up indenting a lot.
 (setq c-recognize-knr-p nil)
 
-;; Whitespace mode.
+;; Whitespace mode configuration
 (require 'whitespace)
 (setq whitespace-style
-      '(face trailing empty tabs tab-mark indentation::space));lines-tail
+      '(face trailing empty tabs tab-mark indentation::space lines-tail))
+(setq whitespace-line-column 120)
 
 ;cedit
 ;(require 'rc-cedet)
@@ -306,10 +308,11 @@
 
 ;;
 ;;Color themes
-;(require 'color-theme)
-;(color-theme-initialize)
 ;(color-theme-xemacs)
 ;color-theme-bharadwaj-slate
+;(require 'color-theme)
+;(color-theme-initialize)
+;(color-theme-hober)))
 
 ; See: http://www.emacswiki.org/cgi-bin/wiki/FillAdapt
 (setq filladapt-token-table
