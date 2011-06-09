@@ -32,4 +32,4 @@ alias gl='global -x'
 alias nas1b="ssh root@nas1b"
 alias hd='hexdump'
 alias p11='cd /local/home/maximk/p11.0/'
-
+alias postreview='python2.7 ~/programs/python2.7/site-packages/rbtools/postreview.py'

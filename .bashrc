@@ -23,12 +23,14 @@ PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 export PS1="\[\e]2;\W> \H: \w\a\e[34;1m\]\h: \W>\[\e[0m\] "
 #export PS1="\[\e]2;\W> \H: \w\a\e[34;1m\]\h: \W\e[33;1m\]$(__git_ps1 " (%s)")\e[34;1m\]>\[\e[0m\] "
 
-export PYTHONPATH=~/lib:$PYTHONPATH
+export PYTHONPATH=~/programs/python2.7/site-packages:$PYTHONPATH
 export PATH=~/programs/bin:~/scripts:/usr/sbin/:$PATH
 export MANPATH=~/programs/man:~/programs/share/man:$MANPATH
 
 export LDFLAGS=-L/a/home/maximk/programs/lib
 export CPPFLAGS=-I/a/home/maximk/programs/include
+
+export LD_LIBRARY_PATH=~/programs/lib
 
 # Avoid having consecutive duplicate commands and other not so useful
 # information appended to the history

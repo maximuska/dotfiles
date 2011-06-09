@@ -26,6 +26,9 @@ function unpack_rpm() {
     fi
     [ $? -eq 0 ] || ABORT "Installing $1 has failed"
 
+    # Extract RPM installation scripts
+    rpm -qp $1 --scripts > $1.scripts
+
     rm -f $tmpfile
     return 0
 }
@@ -33,8 +36,8 @@ function unpack_rpm() {
 ##########
 ## MAIN ##
 
-echo Going to unpack the following packages: *.rpm to ./root/ folder
-[[ "$*"x == ""x ]] && sleep 2
+[[ "$*"x != ""x ]] || ABORT "Usage: $0 <rpms list>"
+echo "Going to unpack $@ to ./root/ folder and save RPM scripts to {$@}.scripts file(s)"
 
 set -x
 
