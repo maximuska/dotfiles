@@ -56,12 +56,10 @@ endif
 
 " Vim can highlight whitespaces for you in a convenient way:
 " For more info, see :h listchars.
-set list
-set listchars=tab:>.,trail:.,extends:#,nbsp:.
-
+" set list
+" set listchars=tab:>.,trail:.,extends:#,nbsp:.
 " In some files, like HTML and XML files, tabs are fine and showing them is really annoying..
-autocmd filetype html,xml set listchars-=tab:>.
-
+" autocmd filetype html,xml set listchars-=tab:>.
 " Use ; to switch to command mode instead of :.
 nnoremap ; :
 
@@ -99,5 +97,16 @@ cmap w!! w !sudo tee % >/dev/null
 "  n... : 	where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
+" This will jump to the last position in the visited files
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
 
 " End .vimrc
