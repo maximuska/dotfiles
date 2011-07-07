@@ -108,8 +108,10 @@
   "Gtags history list.")
 (defconst gtags-symbol-regexp "[A-Za-z_][A-Za-z_0-9]*"
   "Regexp matching tag name.")
-(defconst gtags-definition-regexp "#[ \t]*define[ \t]+\\|ENTRY(\\|ALTENTRY("
+(defconst gtags-definition-regexp "#[ \t]*define[ \t]+\\|ENTRY(\\|ALTENTRY(\\|#[ \t]*include[ \t]+"
   "Regexp matching tag definition name.")
+(defconst gtags-hfile-regexp "[A-Za-z_][A-Za-z_0-9/.]*.h"
+  "Regexp matching file name.")
 (defvar gtags-mode-map (make-sparse-keymap)
   "Keymap used in gtags mode.")
 (defvar gtags-running-xemacs (string-match "XEmacs\\|Lucid" emacs-version)
@@ -181,7 +183,7 @@
   (buffer-substring (match-beginning n) (match-end n)))
 
 ;; Return a default tag to search for, based on the text at point.
-(defun gtags-current-token ()
+(defun gtags-current-token (&optional match-filenames)
   (cond
    ((looking-at "[0-9A-Za-z_]")
     (while (and (not (bolp)) (looking-at "[0-9A-Za-z_]"))
@@ -192,8 +194,11 @@
       (forward-char 1))))
   (if (and (bolp) (looking-at gtags-definition-regexp))
       (goto-char (match-end 0)))
-  (if (looking-at gtags-symbol-regexp)
-      (gtags-match-string 0) nil))
+  (cond ((and match-filenames (looking-at gtags-hfile-regexp)) ; Is header filename (ending with .h)?
+         (gtags-match-string 0))
+        ((looking-at gtags-symbol-regexp) ; Else, get symbol name
+         (gtags-match-string 0))
+        (t nil)))
 
 ;; push current context to stack
 (defun gtags-push-context ()
@@ -435,8 +440,8 @@
         (select-window (posn-window (event-end event)))
         (set-buffer (window-buffer (posn-window (event-end event))))
         (goto-char (posn-point (event-end event))))
-      (setq tagname (gtags-current-token))
-      (setq flag "C"))
+      (setq tagname (gtags-current-token t))
+      (setq flag (if (string-match gtags-hfile-regexp tagname) "Po" "C")))
     (if (not tagname)
         nil
       (gtags-push-context)
