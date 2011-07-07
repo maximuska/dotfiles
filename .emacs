@@ -53,7 +53,7 @@
  '(scroll-bar-mode (quote right))
  '(show-paren-mode t)
  '(size-indication-mode t)
- '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
+ ;'(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
  '(toolbar-visible-p nil)
  '(transient-mark-mode t))
 (custom-set-faces
@@ -175,8 +175,7 @@
 ;; (require 'filladapt)
 ;; (setq-default filladapt-mode t)
 ;; (when (fboundp 'turn-off-filladapt-mode)
-;;   (add-hook 'c-mode-hook 'turn-off-filladapt-mode)
-;;   (add-hook 'outline-mode-hook 'turn-off-filladapt-mode))
+;;    (add-hook 'xml-mode-hook 'turn-off-filladapt-mode)
 
 ;; (require 'backup-dir) 
 ;; (setq bkup-backup-directory-info 
@@ -230,7 +229,7 @@
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-  (setq fill-column 100)
+  (setq fill-column 120)
   (gtags-mode t)
   ; show FIXME/TODO/BUG keywords
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 font-lock-warning-face t)))
@@ -248,6 +247,14 @@
   
 ;; Use python-mode
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+
+(defun turn-on-auto-fill()
+  "Turns on autofill mode in emacs."
+  (auto-fill-mode t))
+
+(defun turn-off-auto-fill()
+  "Turns off autofill mode in emacs."
+  (auto-fill-mode nil))
 
 ;; Auto-break lines in C, C++ mode
 (add-hook 'c-mode-hook 'turn-on-auto-fill)
