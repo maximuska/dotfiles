@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ -z $1 ] ; then
+	echo "Usage: measure_bandwidth <destination hostname>";
+	exit;
+fi
+
+export PATH=/tmp/:$PATH
+scp `which iperf` $1:/tmp
+scp $0 $1:/tmp/
+ssh $1 /tmp/iperf -s -p 1234 -w 2M -m > /dev/null &
+sleep 1
+sudo iperf -c $1 -p 1234 -w 2M -P 8 -m 
+ssh $1 killall iperf
