@@ -110,7 +110,7 @@
   "Regexp matching tag name.")
 (defconst gtags-definition-regexp "#[ \t]*define[ \t]+\\|ENTRY(\\|ALTENTRY(\\|#[ \t]*include[ \t]+"
   "Regexp matching tag definition name.")
-(defconst gtags-hfile-regexp "[A-Za-z_][A-Za-z_0-9/.]*.h"
+(defconst gtags-hfile-regexp "[A-Za-z_0-9/.]+\\.h"
   "Regexp matching file name.")
 (defvar gtags-mode-map (make-sparse-keymap)
   "Keymap used in gtags mode.")
