@@ -11,16 +11,9 @@ function screen_title_save() {
         fi
 }
 function screen_win_title() {
-        screen_title_save
-        export swin_title=$*
-        [[ "$TERM" == "screen" ]] && echo -n -e '\ek'$swin_title'\e\'
+        [[ "$TERM" == "screen" ]] && echo -n -e '\ek'$*'\e\'
 }
-function screen_win_title_restore() {
-	export swin_title=$sprev_title
-	export sprev_title="bash"
-	[[ "$TERM" == "screen" ]] && echo -n -e '\ek'$swin_title'\e\'
-}
-function ssh() { screen_win_title $* ; `which ssh` $* ; screen_win_title_restore ; }
+function ssh() { [[ $* =~ "(^[A-z0-9]+)| ([A-z0-9]+)" ]] && screen_win_title ${BASH_REMATCH:0}; `which ssh` $*; screen_win_title $HOST; }
 
 function gg() { git grep -n --color "$@" | sed -re "s/(:[0-9]+):/\1 /"; }
 

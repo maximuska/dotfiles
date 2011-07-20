@@ -46,7 +46,7 @@ export CDPATH=.:~:~/development
 export EDITOR=~/scripts/e.sh
 
 # Naming 'screen' windows by app executed / connected hosts 
-screen_win_title "$HOST"
+screen_win_title `hostname`
 
 # Seting dev. environment stuff
 [[ -f ~/.set_target ]] && source ~/.set_target
