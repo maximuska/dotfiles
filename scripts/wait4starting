@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo Waiting..
+while ! (tail -n5 ~/development/spec-sfs/result/sfslog.perfdata | grep "Sending START message"); do echo Retrying at `date` +10; sleep 10; done
+sleep 10
+echo Done waiting at: `date`

@@ -1,7 +1,9 @@
 echo Running...
-find -name "*.c" -or -name "*.cc" -or -name "*.h" -or -name "*.xml" -or -name "*.py" | grep -v .xmake.build > .files
+find -name "*.c" -or -name "*.cc" -or -name "*.C" -or -name "*.h" -or -name "*.xh" -or -name "*.xml" -or -name "*.py" | grep -v .xmake.build | grep -v "_test.c" > .files
 echo Total files: `wc -l .files`
-cat .files | pv -l | etags -L -
-cat .files | pv -l | ctags -L -
-gtags -f .files
+gtags -I -f .files&
+etags -L .files&
+ctags -L .files&
 #cat .files | pv -l | cscope -b -i -
+echo Waiting for tags to be prepared..
+wait

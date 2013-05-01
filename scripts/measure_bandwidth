@@ -1,11 +1,14 @@
 #!/bin/sh
 if [ -z $1 ] ; then
-	echo "Usage: measure_bandwidth <destination hostname>";
+	echo "Usage: measure_bandwidth <destination host IP>";
 	exit;
 fi
 
+IPERF=`which iperf`
+if [ -z $IPERF ] ; then echo "iperf not installed, exiting"; exit; fi
+
 export PATH=/tmp/:$PATH
-scp `which iperf` $1:/tmp
+scp $IPERF $1:/tmp
 scp $0 $1:/tmp/
 ssh $1 /tmp/iperf -s -p 1234 -w 2M -m > /dev/null &
 sleep 1

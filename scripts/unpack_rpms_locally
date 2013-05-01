@@ -9,6 +9,11 @@ function INFO() {
     echo -e '\e[1;32m'$*'\e[0m'
 }
 
+function check_environment() {
+    which rpm > /dev/null || ABORT "'rpm' tool was not found"
+    which rpm2cpio > /dev/null || ABORT "'rpm2cpio' tool was not found"
+}
+
 function unpack_rpm() {
     # Auto-detect whatever the RPM is compressed
     INFO "Unpacking $1.."
@@ -21,8 +26,8 @@ function unpack_rpm() {
         cpio -idmu <$tmpfile 
     else
         # Compressed RPM
-        (lzma d -so $tmpfile | cpio -idmu)
-#        (xz -dc $tmpfile | cpio -idmu)
+#        (lzma d -so $tmpfile | cpio -idmu)
+        (xz -dc $tmpfile | cpio -idmu)
     fi
     [ $? -eq 0 ] || ABORT "Installing $1 has failed"
 
@@ -37,9 +42,13 @@ function unpack_rpm() {
 ## MAIN ##
 
 [[ "$*"x != ""x ]] || ABORT "Usage: $0 <rpms list>"
+
+echo "Checking environemnt for required tools.."
+check_environment
+
 echo "Going to unpack $@ to ./root/ folder and save RPM scripts to {$@}.scripts file(s)"
 
-set -x
+[[ ! -n "$DEBUG" ]] || set -x
 
 mkdir -p root
 cd root

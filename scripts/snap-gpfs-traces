@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh root@172.16.40.6 -i ~/.ssh/system_rsa -- '( date; mmdiag --threads | grep  "waiting for Disk" | wc -l ; mmdiag --threads | grep  "waiting on ThMutex" | wc -l ; export TRCDIR=/local/gpfs; mmtrace; sleep 20; mmtrace stop; mmfsadm trace all 0 ) | tee -a /local/gpfs/traces.log'
