@@ -12,17 +12,21 @@
 [rebase]
     stat = True
 
-[diff]
+# Merging stuff
+[merge]
+    #tool = vimdiff3
     tool = p4merge
 [difftool "p4merge"]
     cmd = "p4merge.exe $LOCAL $REMOTE"
-[merge]
-    tool = p4merge
 [mergetool "p4merge"]
     cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
     keepTemporaries = false
     trustExitCode = false
     keepBackup = false
+[mergetool "vimdiff3"]
+    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[mergetool "gvimdiff3"]
+    cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [color "branch"]
     current = yellow bold
@@ -60,3 +64,6 @@
     ls = ls-files
     what = whatchanged
     wdiff = diff --color-words
+
+[rerere]
+    enabled = 1
