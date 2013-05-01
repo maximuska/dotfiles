@@ -1,8 +1,13 @@
 ## Screen configuration file
 ## Author: maximk
 
-# Set 'escape' key to ^W instead of Ctr-a
-escape ^Ww
+# Setting 'escape' key to Ctr-Q and to Alt-Q instead of Ctr-A
+# (Tip from: http://adb.cba.pl/gnu-screen-tips-page-my.html#howto-alt-key-as-escape)
+# define and auxiliary register and make  Alt + Q producing ^Q now to acts as an (additional) escape key
+escape ^Qq
+register S ^Q
+bindkey "q" process S
+bindkey "\361" process S
 
 # Turn off debug log (in case screen was compiled with debug on, as I did)
 debug off
@@ -10,6 +15,11 @@ debug off
 # Bind Alt-Left/Right to switch buffers in the current window
 bindkey -d "\033\033OD" prev
 bindkey -d "\033\033OC" next
+bindkey -d "[1;3D" prev
+bindkey -d "[1;3C" next
+
+bindkey -d "\033\033[D" prev # putty
+bindkey -d "\033\033[C" next # putty
 
 # Ditto with F1/F2
 bindkey -k k1 prev
@@ -24,8 +34,10 @@ bindkey -k F1 colon # F11
 # Bind 'Enter' to exit scrolling mode instead of starting a selection.
 # Bind 'Home' to move cursor to the beginning of the line (instead of beginning of the scroll buffer).
 bindkey -d "[5~" eval copy "stuff 5\025"
+bindkey -d "[5;3~" eval copy "stuff 5\025"
 bindkey -m "[5~" stuff "5\025"
 bindkey -d "[6~" eval copy "stuff 5\004"
+bindkey -d "[6;3~" eval copy "stuff 5\004"
 bindkey -m "[6~" stuff "5\004"
 markkeys "^C=^M"                          # Bind 'Enter' to Ctr-C in selection mode
 bindkey -m -k kh stuff "^A"               # Home
@@ -60,13 +72,19 @@ vbell on
 #Scrolling in xterm
 #termcapinfo xterm* ti@:te@
 
+## Terminfo and Termcap for nice 256 color terminal
+#attrcolor b ".I" # allow bold colors - necessary for some reason
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' # tell screen how to set colors. AB = background, AF=foreground
+#defbce "on" # erase background with current bg color 
+
 # geometry
 #height 240
 #width 120
-defscrollback 10000
+defscrollback 100000
 
-# status line
-hardstatus lastline "%{= dd}--< %{= dm}%H%{= dd} >--< %{= dg}%c%{ dd} >-- ( %-w%{= BW}%n %t%{-}%+w )%="
+# status line TBD: add inversion support when escape key is pressed: http://adb.cba.pl/gnu-screen-tips-page-my.html#howto-alt-key-as-escape
+hardstatus lastline "%{= dd}--< %{= dm}%H%{= dd} >--< %{= dg}%c%{ dd} >-- ( %-w%{= BW}%n%f %t%{-}%+w%-30< ) %= --<%{= dm} %l %{= dd}>--"
+#hardstatus lastline "%{= dd}--< %{= dm}%H%{= dd} >--< %{= dg}%c%{ dd} >-- ( %-w%{= BW}%n %t%{-}%+w ) %= --<%{= dm} %l %{= dd}>--"
 #hardstatus lastline '%{= kG}[%{G}%H%{g}][%= %{= kw}%?%-Lw%?%{r} (%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
 #caption always # activates window caption
 #caption string '%{= wk}[%{k}%H%{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
