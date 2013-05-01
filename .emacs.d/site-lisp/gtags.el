@@ -48,9 +48,9 @@
 ;; [Setting to reproduce old 'Gtags mode']
 ;;
 ;; (setq gtags-mode-hook
-;;   '(lambda ()
-;;      (setq gtags-pop-delete t)
-;;      (setq gtags-path-style 'absolute)
+;;    '(lambda ()
+;;       (setq gtags-pop-delete t)
+;;       (setq gtags-path-style 'absolute)
 ;; ))
 ;;
 ;; [Setting to make 'Gtags select mode' easy to see]
@@ -87,12 +87,12 @@
   :type 'boolean
   :group 'gtags)
 
-(defcustom gtags-pop-delete nil
+(defcustom gtags-pop-delete t
   "*If non-nil, gtags-pop will delete the buffer."
   :group 'gtags
   :type 'boolean)
 
-(defcustom gtags-select-buffer-single nil
+(defcustom gtags-select-buffer-single t
   "*If non-nil, gtags select buffer is single."
   :group 'gtags
   :type 'boolean)
@@ -279,15 +279,7 @@
 
 ;; get the path of gtags root directory.
 (defun gtags-get-rootpath ()
-  (let (path buffer)
-    (save-excursion
-      (setq buffer (generate-new-buffer (generate-new-buffer-name "*rootdir*")))
-      (set-buffer buffer)
-      (setq n (call-process "global" nil t nil "-pr"))
-      (if (= n 0)
-        (setq path (file-name-as-directory (buffer-substring (point-min)(1- (point-max))))))
-      (kill-buffer buffer))
-    path))
+  (locate-dominating-file default-directory "GTAGS"))
 
 ;; decode path name
 ;; The path is encoded by global(1) with the --encode-path="..." option.
@@ -515,7 +507,7 @@
     ; Use always ctags-x format.
     (setq option "-x")
     (if (char-equal flag-char ?C)
-        (setq context (concat "--from-here=" (number-to-string (gtags-current-lineno)) ":" buffer-file-name))
+        (setq context (concat "--from-here=" (number-to-string (gtags-current-lineno)) ":" (file-relative-name buffer-file-name (gtags-get-rootpath))))
         (setq option (concat option flag)))
     (cond
      ((char-equal flag-char ?C)
@@ -574,7 +566,7 @@
           (setq rootdir gtags-rootdir)
          (setq rootdir (gtags-get-rootpath)))
         (if rootdir (cd rootdir)))))
-    (message "Searching %s ..." tagname)
+    ; (message "Searching %s ... options: %s ctxt: %s" tagname option context)
     (if (not (= 0 (if (equal flag "C")
                       (call-process "global" nil t nil option "--encode-path=\" \t\"" context tagname)
                       (call-process "global" nil t nil option "--encode-path=\" \t\"" tagname))))
@@ -599,7 +591,7 @@
 	(kill-buffer buffer)
 	(set-buffer save))
        ((= 1 lines)
-	(message "Searching %s ... Done" tagname)
+	;(message "Searching %s ... Done" tagname)
 	(gtags-select-it t other-win))
        (t
         (if (null other-win)
