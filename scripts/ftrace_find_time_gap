@@ -1,0 +1,32 @@
+#!/bin/bash
+
+MINGAP=0.5
+
+A32="\e[1;32m"
+A00="\e[0m"
+
+INPUTFILES="$@"
+if [ -d "$INPUTFILES" ]; then
+    INPUTFILES="$@/m*-ftrace.txt"
+fi
+
+echo -e "Processing files: $INPUTFILES, looking for gaps longer than: $A32$MINGAP sec$A00"
+
+# Split traces per cpu core. Doing 4 passes here, assuming 4 cores, we could do better actually.
+for f in $INPUTFILES; do
+    for cpu in {0..3}; do
+        test -e $f.cpu$cpu || grep "  $cpu)" $f > $f.cpu$cpu
+    done
+done
+
+# Process split traces
+for f in $INPUTFILES; do
+#    exec &> >(tee $f.gaps.log >&2)
+    echo -e "Processing traces for:${A32}$f${A00}"
+
+    for cpu in {0..3}; do
+        cpufile=$f.cpu$cpu
+        echo "CORE: $cpu (file: $cpufile)"
+        awk '/^  +[0-9]/ { if (PREV && $1 - PREV > '$MINGAP') print "Gap at line " NR ": " PREV " - " $1"\n>> " PREVLINE "\n>> " $0 ; PREV=$1; PREVLINE=$0; }' $cpufile
+    done
+done
