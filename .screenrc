@@ -8,6 +8,7 @@ escape ^Qq
 register S ^Q
 bindkey "q" process S
 bindkey "\361" process S
+#bindkey "" process S # Handy at terminals messing with Alt-Q
 
 # Turn off debug log (in case screen was compiled with debug on, as I did)
 debug off
@@ -20,6 +21,10 @@ bindkey -d "[1;3C" next
 
 bindkey -d "\033\033[D" prev # putty
 bindkey -d "\033\033[C" next # putty
+
+# Bind Alt-h Alt-l to switch buffers
+bindkey -d "ˍ" prev
+bindkey -d "-" next
 
 # Ditto with F1/F2
 bindkey -k k1 prev
@@ -73,9 +78,11 @@ vbell on
 #termcapinfo xterm* ti@:te@
 
 ## Terminfo and Termcap for nice 256 color terminal
-#attrcolor b ".I" # allow bold colors - necessary for some reason
-#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' # tell screen how to set colors. AB = background, AF=foreground
-#defbce "on" # erase background with current bg color 
+attrcolor b ".I" # allow bold colors - necessary for some reason
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' # tell screen how to set colors. AB = background, AF=foreground
+#defbce on # erase background with current bg color
+# The following is not recommended, but convenient in my specific case.
+#term screen-256color
 
 # geometry
 #height 240

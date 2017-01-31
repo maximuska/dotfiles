@@ -1,37 +1,41 @@
 #!/bin/bash
 # Author: Maxim Kalaev
 
-if [[ -z "$DISPLAY" ]]; then
-    #TODO: use emacsclient -nw --alternate-editor= $@ ?
-    echo ERROR: DISPLAY not set
-    exit -1
-fi
+function die() { echo $* ; exit -1; }
+function clear_right() { echo -ne "\e[K"; } # Clear to the right of the cursor
 
-# Starting emacs server unless already running & waiting it
-#  to finish the initializations
-if ! emacsclient -e t >/dev/null 2>&1
-then
+function start_emacs_server() {
+    # Starting emacs server unless already running & waiting it
+    #  to finish the initializations
+    timeout=15
+    if emacsclient -e t >/dev/null 2>&1; then
+        return 0
+    fi
+
     # Update display when running from screen
     [[ -n "$WINDOW" && -e ~/.sdisplay ]] && source ~/.sdisplay
 
     #emacs --daemon
-    (emacs&)
-    for ((i=1; i <= 10; ++i)); do
-        echo -ne "Waiting for emacs server to start.. $i\r"
+    (emacs -fg black -bg wheat &)
+    for ((i=1; i <= $timeout; ++i)); do
+        echo -ne "Waiting for emacs server to start.. ($i sec elapsed)\r"
         sleep 1
-        if emacsclient -e t >/dev/null 2>&1
-	then
-            break
-        else
-            if ((i == 10))
-            then
-                echo "Couldn't connect emacs server after $i sec, exiting.      "
-                exit -1
-            fi
+        if emacsclient -e t >/dev/null 2>&1; then
+            clear_right
+            return 0
         fi
     done
-    echo -ne "                                         \r"
+
+    echo
+    return 1
+}
+
+if [[ -z "$DISPLAY" ]]; then
+    #TODO: use emacsclient -nw --alternate-editor= $@ ?
+    die "ERROR: DISPLAY not set"
 fi
+
+start_emacs_server || die "Timedout connecting emacs server, exiting."
 
 # Using emacsclient to open all the supplied files with optional
 # line numbers in emacs server

@@ -16,8 +16,10 @@ function screen_win_title() {
 # Store DISPLAY value when screen starts to allow getting an updated value in restored sessions
 function screen() { echo -e "if [[ \$HOSTNAME == $HOSTNAME ]]; then export DISPLAY=$DISPLAY; fi" > ~/.sdisplay; `which screen` $*; }
 
-function ssh() { _re='(^[A-z0-9]+)| ([A-z0-9]+)'; [[ $* =~ $_re ]] && screen_win_title ${BASH_REMATCH:0}; LC_MY_CWD_FOR_SSH=`pwd` `which ssh` $*; ret=$?; screen_win_title `hostname`;
+function ssh() { _re='(^[0-9.]+$)|(^[A-z0-9-]+)| ([A-z0-9-]+)'; [[ $* =~ $_re ]] && screen_win_title ${BASH_REMATCH:0}; LC_MY_CWD_FOR_SSH=`pwd` `which ssh` $*; ret=$?; screen_win_title `hostname`;
 return $ret;}
+
+#function scp() { to=${@: -1}; [[ "$to" =~ .*/ ]] && [[ ! -d "$to" ]] && echo "Creating target dir: $to" && { mkdir "$to" || return $?; } ; `which scp` "$@"; }
 
 function gg() { git grep -n --color "$@" | sed -re "s/(:[^:]+):/\1 /"; }
 
@@ -25,20 +27,22 @@ function vi() {
     _re='(.*):([0-9]+)(:.*)?'
     if [[ "$*" =~ $_re ]]; then
         DISPLAY= vim ${BASH_REMATCH[1]} +${BASH_REMATCH[2]}
+        #vim ${BASH_REMATCH[1]} +${BASH_REMATCH[2]}
     else
         DISPLAY= vim "$@"
+        #vim "$@"
     fi
 }
 
 alias grep='grep --color --exclude=TAGS --exclude=tags'
-alias zap='rm *~'
 function md { mkdir -p "$@" ; cd "$1"; }
 function mdd { md "`date +%F-%R`$@"; }
-alias gl='global -x'
-alias nas1b="ssh root@nas1b"
-alias hd='hexdump'
-alias p11='cd /local/home/maximk/p11.0/'
-alias postreview='python2.7 ~/programs/python2.7/site-packages/rbtools/postreview.py'
+function gl { global -x "$@" | awk '{ if ($2 ~ /[0-9]+/) { $3 = $3":"$2"\t"; $1 = $2 =""; $0=$0}; print }'; }
+#alias hd='hexdump'
+alias cdp='cd /home/maximk/development/p11.0-purple/leia'
+alias cdx='cd /home/maximk/development/p11.0-xiv/leia'
+alias cdd='cd /home/maximk/development/xiv-devroot'
+#alias postreview='python2.7 ~/programs/python2.7/site-packages/rbtools/postreview.py'
 alias ls='ls -F --color'
 alias fullpath='python -c "import os, sys; print os.path.realpath(sys.argv[1])"'
 alias less='less -fR'
