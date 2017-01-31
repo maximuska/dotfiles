@@ -250,6 +250,10 @@ endif
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
+" Gitgutter
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+
 " Teach 'ctrlp' to use git ls-files when available
 let g:ctrlp_use_caching = 1 " F5 to refresh quickly
 let g:ctrlp_lazy_update = 200 " Delay updates up to 200ms
@@ -282,6 +286,16 @@ autocmd QuickFixCmdPost *grep* cwindow
 " Airline bar customization
 let g:airline#extensions#tabline#enabled = 1 " Automatically displays all buffers when there's only one tab open.
 let g:airline#extensions#whitespace#enabled = 0 " Disable builtin whitespace extension
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 " Highlight trailing whitespaces using 'error' color (http://www.bestofvim.com/tip/trailing-whitespace/)
 match ErrorMsg '\s\+$'
