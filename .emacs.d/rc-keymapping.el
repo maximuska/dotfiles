@@ -30,7 +30,7 @@
 ;; (global-set-key [(meta left)] 'tabbar-backward)
 ;; (global-set-key [(meta right)] 'tabbar-forward)
 
-(global-set-key [(control \;)] (lambda ()
+(global-set-key [(control c) (\;)] (lambda ()
   "Show the full path file name in the minibuffer, and puts it into the clipboard"
   (interactive)
   (when buffer-file-name

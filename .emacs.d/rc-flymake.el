@@ -24,11 +24,16 @@
                        (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace)
                        buildfile-dir))
            (build-command "gcc")
-           (build-args-list (list "-g" "-O2" "-Wall" "-Wno-pointer-sign" "-Werror" "-Wno-unused-result"
-                                 "-I."
-                                 "-D__MY_FILE__=xxx" "-D_GNU_SOURCE"
-                                 "-o" "/dev/null"
-                                 "-c" temp-file)))
+           (build-args-list (list "-g" "-O2" "-Wall" "-Werror"
+                                  "-Wno-pointer-sign"
+                                  "-Wno-unused-result"
+                                  "-Wno-unused-but-set-variable"
+                                  "-Wno-enum-compare"
+                                  "-I."
+                                  "-D__MY_FILE__=xxx"
+                                  "-D_GNU_SOURCE=xx"
+                                  "-o" "/dev/null"
+                                  "-c" temp-file)))
       (if buildfile-dir
           (setq flymake-base-dir buildfile-dir)
         (flymake-log 1 "no buildfile (%s) for %s" "xtool.py" buffer-file-name) nil)

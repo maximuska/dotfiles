@@ -4,10 +4,10 @@ rxvt*font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*
 rxvt*background: black
 rxvt*foreground: wheat
 
-Emacs.background: wheat
-Emacs.foreground: black
-Emacs.font: -*-dejavu sans mono-medium-r-normal-*-*-*-*-*-m-0-iso10646-*
-Emacs.geometry: 120x60+330+50 
+emacs.background: wheat
+emacs.foreground: black
+emacs.font: -*-dejavu sans mono-medium-r-normal-*-*-*-*-*-m-0-iso10646-*
+emacs.geometry: 120x60+330+50
 
 xterm*font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*
 !XTerm.cw*vt100.boldMode: false
@@ -39,8 +39,8 @@ xterm*saveLines:	1000
 ! Blink instead of beeping
 *visualBell: True
 
-XTerm.VT100.translations: #override \
-        <Btn2Up>:ignore() \n\
-	<FocusIn>:ignore()		\n\
-	<FocusOut>:ignore()		\n\
+!XTerm.VT100.translations: #override \
+!        <Btn2Up>:ignore() \n\
+!	<FocusIn>:ignore()		\n\
+!	<FocusOut>:ignore()		\n\
 

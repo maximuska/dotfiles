@@ -87,7 +87,7 @@
   :type 'boolean
   :group 'gtags)
 
-(defcustom gtags-pop-delete t
+(defcustom gtags-pop-delete nil
   "*If non-nil, gtags-pop will delete the buffer."
   :group 'gtags
   :type 'boolean)
