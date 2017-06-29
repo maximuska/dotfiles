@@ -1,6 +1,37 @@
 " Begin .vimrc
 
 set nocompatible
+
+" Required Vundle setup
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'vim-scripts/OmniCppComplete.git'
+Plugin 'vim-scripts/argtextobj.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ervandew/supertab.git'
+Plugin 'majutsushi/tagbar.git'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'altercation/vim-colors-solarized.git'
+Plugin 'airblade/vim-gitgutter.git'
+Plugin 'terryma/vim-expand-region'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-sensible.git'
+Plugin 'tpope/vim-sleuth.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'tpope/vim-unimpaired.git'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 set bs=2
 set background=dark
 set wrapmargin=8
@@ -9,9 +40,6 @@ set hidden
 
 " Look down the parent folders for tag files
 set tags=tags,../tags,../../tags,../../../tags
-
-" Enable filetype plugins
-filetype plugin on
 
 " Inspired by: http://nvie.com/posts/how-i-boosted-my-vim/
 set nowrap        " don't wrap lines
@@ -299,10 +327,5 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 
 " Highlight trailing whitespaces using 'error' color (http://www.bestofvim.com/tip/trailing-whitespace/)
 match ErrorMsg '\s\+$'
-
-" Patagen plugins manager
-" https://github.com/tpope/vim-pathogen
-execute pathogen#infect()
-filetype plugin indent on
 
 " End .vimrc
